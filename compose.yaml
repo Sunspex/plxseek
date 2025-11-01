@@ -1,0 +1,28 @@
+  services:
+    plex:
+      image: plexinc/pms-docker
+      environment:
+        - TZ=US/EST
+        - PLEX_CLAIM:claim-unoxGoEGiexVxcDkB4PF      
+      network_mode: host
+      volumes:
+        - /mnt/sda1/stuff:/config
+        - /mnt/sda1/stuff/Music:/Music
+      restart: unless-stopped
+    slskd:
+      image: slskd/slskd:latest
+      environment:
+        - SLSKD_UMASK=001
+        - SLSKD_DOWNLOADS_DIR=/complete
+        - SLSKD_INCOMPLETE_DIR=/incomplete
+        - SLSKD_REMOTE_CONFIGURATION=true
+        - SLSKD_SHARED_DIR=/complete
+      ports:
+        - 5030:5030\tcp
+        - 5031:5031\tcp
+        - 50300:50300\tcp
+      volumes: 
+        - /mnt/sda1/stuff:/app
+        - /mnt/sda1/stuff/Music:/complete
+        - /mnt/sda1/stuff/pending:/incomplete
+      restart: unless-stopped
