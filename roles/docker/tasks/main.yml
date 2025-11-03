@@ -1,28 +1,28 @@
 ---
 - name: 'install packages for key retrival'
   become: yes 
-    ansible.builtin.package:
-      name:
-        - ca-certificates
-      state: present
+  ansible.builtin.package:
+    name:
+     - ca-certificates
+    state: present
 - name: 'create keyring directory'
   become: yes
-    ansible.builtin.file:
-      path: /etc/apt/keyrings
-      state: directory
-      recurse: true
-      mode: '0755'
+  ansible.builtin.file:
+    path: /etc/apt/keyrings
+    state: directory
+    recurse: true
+    mode: '0755'
 - name: 'get key from docker source'
   become: yes
-    ansible.builtin.get_url:
-      url: https://download.docker.com/linux/debian/gpg
-      dest: /etc/apt/keyrings/docker.asc
-      mode: '0444'
+  ansible.builtin.get_url:
+    url: https://download.docker.com/linux/debian/gpg
+    dest: /etc/apt/keyrings/docker.asc
+    mode: '0444'
 - name: 'add the repository to apt sources'
   become: yes
-    ansible.builtin.apt_repository:
-      repo: 'deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian $(. /etc/os-release && echo "$VERSION_CODENAME") stable'
-      state: present
+  ansible.builtin.apt_repository:
+    repo: 'deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian $(. /etc/os-release && echo "$VERSION_CODENAME") stable'
+    state: present
 - name: 'remove conflicting packages'
   become: yes
   ansible.builtin.package:
