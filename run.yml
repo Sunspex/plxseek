@@ -4,6 +4,7 @@
 - hosts: all
   roles:
     - common
+    - docker
   tags:
     - common
 ...

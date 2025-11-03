@@ -1,0 +1,27 @@
+---
+- name: 'install common packages'
+  become: yes
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ common_packages }}"
+- name: 'add users'
+  become: yes
+  ansible.builtin.user:
+    name: "{{ item }}"
+    groups:
+      - wheel
+      - docker
+  loop:
+    - mcas
+    - tnew
+- name: 'manage sshd config'
+  become: yes
+  ansible.builtin.copy:
+    src: sshd_config
+    dest: /etc/ssh/sshd_config
+    owner: root
+    group: root
+  notify:
+    - reload SSHD
+...
