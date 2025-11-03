@@ -1,0 +1,9 @@
+---
+# Playbook that applies roles based on inventory groups
+
+- hosts: all
+  roles:
+    - common
+  tags:
+    - common
+...
