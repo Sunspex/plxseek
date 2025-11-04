@@ -1,9 +1,15 @@
 ---
+- name: 'copy compose file to remote'
+  ansible.builtin.copy:
+    src: /home/mcas/git/git2/plxseek/roles/container/files/compose.yaml
+    dest: /home/mcas/compose.yaml
 - name: 'remove old containers'
   community.docker.docker_compose_v2:
+    project_src: ./    
     state: absent
 - name: 'add and run new containers'
   community.docker.docker_compose_v2:
+    project_src: ./
     state: present
   register: name
 - name: 'confirm running containers'
@@ -11,6 +17,7 @@
     var: name
 - name: 'run compose again'
   community.docker.docker_compose_v2:
+    project_src: ./
     state: present
   register: state
 - name: 'confirm again'

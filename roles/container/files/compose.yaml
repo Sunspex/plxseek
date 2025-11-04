@@ -3,10 +3,10 @@
       image: plexinc/pms-docker
       environment:
         - TZ=US/EST
-        - PLEX_CLAIM:claim-unoxGoEGiexVxcDkB4PF      
+        - PLEX_CLAIM:s4UsFvSjYRmsLQTCtKZW 
       network_mode: host
       volumes:
-        - /mnt/sda1/stuff:/config
+        - /home/mcas/plxseek/plex:/config
         - /mnt/sda1/stuff/Music:/Music
       restart: unless-stopped
     slskd:
@@ -18,11 +18,11 @@
         - SLSKD_REMOTE_CONFIGURATION=true
         - SLSKD_SHARED_DIR=/complete
       ports:
-        - 5030:5030\tcp
-        - 5031:5031\tcp
-        - 50300:50300\tcp
+        - 5030:5030
+        - 5031:5031
+        - 50300:50300
       volumes: 
-        - /mnt/sda1/stuff:/app
+        - /home/mcas/plxseek/slskd:/app
         - /mnt/sda1/stuff/Music:/complete
         - /mnt/sda1/stuff/pending:/incomplete
       restart: unless-stopped

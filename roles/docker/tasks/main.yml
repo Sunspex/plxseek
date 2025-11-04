@@ -18,11 +18,6 @@
     url: https://download.docker.com/linux/debian/gpg
     dest: /etc/apt/keyrings/docker.asc
     mode: '0444'
-- name: 'add the repository to apt sources'
-  become: yes
-  ansible.builtin.apt_repository:
-    repo: 'deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian $(. /etc/os-release && echo "$VERSION_CODENAME") stable'
-    state: present
 - name: 'remove conflicting packages'
   become: yes
   ansible.builtin.package:
