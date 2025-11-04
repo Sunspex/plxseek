@@ -1,19 +1,7 @@
 ---
-- name: 'remove old containers'
+- name: 'install services'
   community.docker.docker_compose_v2:
-    state: absent
-- name: 'add and run new containers'
-  community.docker.docker_compose_v2:
+    become: true
+    project_src: /home/mcas/git/plxseek/roles/container/files
     state: present
-  register: name
-- name: 'confirm running containers'
-  ansible.builtin.debug:
-    var: name
-- name: 'run compose again'
-  community.docker.docker_compose_v2:
-    state: present
-  register: state
-- name: 'confirm again'
-  ansible.builtin.debug:
-    var: state
 ...
