@@ -5,6 +5,14 @@
     name: "{{ item }}"
     state: present
   loop: "{{ common_packages }}"
+- name: 'add groups'
+  become: yes
+  ansible.builtin.group:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - wheel
+    - docker
 - name: 'add users'
   become: yes
   ansible.builtin.user:
@@ -13,8 +21,8 @@
       - wheel
       - docker
   loop:
-    - mcas
-    - tnew
+    - micas
+    - thnew
 - name: 'manage sshd config'
   become: yes
   ansible.builtin.copy:
